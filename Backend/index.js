@@ -15,8 +15,7 @@ const PORT = process.env.PORT || 5000;
 
 // ✅ Define allowed origins for CORS
 const allowedOrigins = [
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
+  'http://localhost:5173',
   // Add your frontend/deployed URL here if needed
 ];
 
@@ -29,6 +28,7 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log(`❌ CORS blocked for origin: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },

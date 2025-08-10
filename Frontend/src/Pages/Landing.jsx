@@ -97,7 +97,7 @@ const Landing = () => {
     const checkLoginStatus = async () => {
 
         try {
-          const res = await axios.get("https://code-genisis-back.onrender.com/check/authme" , {withCredentials : true}) ; 
+          const res = await axios.get("https://code-genisis-back-2.onrender.com/check/authme" , {withCredentials : true}) ; 
           if(res.data.success){
             setUser(res.data.user) ; 
             setUserName(res.data.user.name) ; 
