@@ -45,3 +45,4 @@ coverage/
 
 # Optional:
 yarn.lock
+.vercel

@@ -35,7 +35,7 @@ const CodeOptimizer = () => {
     try {
       setLoading(true) ; 
       const Prompt = PROMPTS.OptimizedCode ; 
-      const res = await axios.post("http://localhost:5000/ai/get-response" , 
+      const res = await axios.post("https://code-genisis-backend-qtxpwmosv-chandus-projects-d19e03f3.vercel.app/ai/get-response" , 
         {code , instruction : Prompt , title:"Code_Optimizer"}, 
         {withCredentials: true}
       ); 
@@ -65,7 +65,7 @@ const CodeOptimizer = () => {
 
       `;
 
-      const result = await axios.post("http://localhost:5000/ai/get-response" , 
+      const result = await axios.post("https://code-genisis-backend-qtxpwmosv-chandus-projects-d19e03f3.vercel.app/ai/get-response" , 
         {code , instruction : PromptJson , title:"NULL"}, 
         { withCredentials : true }
       ); 
@@ -96,7 +96,7 @@ const CodeOptimizer = () => {
     try {
       setLoading(true) ; 
       const Prompt = PROMPTS.QuickFix ; 
-      const res = await axios.post("http://localhost:5000/ai/get-response" , 
+      const res = await axios.post("https://code-genisis-backend-qtxpwmosv-chandus-projects-d19e03f3.vercel.app/ai/get-response" , 
         {code , instruction : Prompt , title:"Quick_Fixer"}, 
         { withCredentials : true }
       ); 
