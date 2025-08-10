@@ -1,119 +1,121 @@
-import React, { useState } from 'react'
-import axios from 'axios' ; 
+import React, { useState } from 'react';
+import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
-import '../Style/LoginSignup.css'
-
+import { useNavigate } from 'react-router-dom';
+import '../Style/LoginSignup.css';
 
 const SignUp = () => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate() ; 
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
+  const [loading, setLoading] = useState(false);
 
-    // -------------------- Usestates -------------------------
-    const [formData , setFormData] = useState({
-        name : '' , 
-        email : '' , 
-        password : '' 
-    }) ; 
-    const [message , setMessage] = useState('') ; 
-    const [loading , setloading] = useState(false) ; 
-    // ---------------------------------------------------------
-    
+  // Change handler
+  const ChangeHandler = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value
+    });
+  };
 
-    // ---------------------- Handlers --------------------------
+  // Submit handler
+  const SubmitHandler = async (event) => {
+    event.preventDefault();
 
-    // chnage handler ... 
-    const ChangeHandler = (event) => {
-        setFormData({
-            ...formData , 
-            [event.target.name] : event.target.value
-        }); 
-    }; 
+    try {
+      setLoading(true);
 
-    // submit handler ... 
-    const SubmitHandler = async (event) => {
+      // Signup request
+      const res = await axios.post(
+        'http://localhost:5000/auth/signup',
+        formData,
+        { withCredentials: true }
+      );
 
-        event.preventDefault() ; 
+      toast.success(String(res.data.message || 'Signup successful'));
 
-        try {
-            setloading(true) ; 
-            // ---- Api Calling ----
-            const res = await axios.post("https://code-genisis-back-2.onrender.com//auth/signup" , formData) ; 
-            setMessage(res.data.message) ; 
-            console.log(message) ; 
-            console.log(res) ; 
-            setloading(false) ; 
-            
-            // setTimeout(() => {
-            //     navigate('/login'); 
-            // }, 2000);
+      // Auto login after signup
+      const lgres = await axios.post(
+        'http://localhost:5000/auth/login',
+        formData,
+        { withCredentials: true }
+      );
 
-            // ---- Api calling ----
-                const lgres = await axios.post("https://code-genisis-back-2.onrender.com//auth/login" , formData , {
-                    withCredentials : true , //accessing cookies 
-                });
-                setMessage(lgres.data.message) ; 
-                // ----------------------------------
-                    localStorage.setItem('#K&v@M!d$Q*L' , 'true' ); 
-                // ---------------------------------
-                setloading(false) ; 
-                toast.success("Signup Successfully") ;   
-                setTimeout(() => {
-                    navigate('/') ; 
-                }, 1000);
+      localStorage.setItem('#K&v@M!d$Q*L', 'true');
+      toast.success(String(lgres.data.message || 'Login successful'));
 
-        }
-
-        catch (error) {
-            setMessage(error.response?. data?. message || "SignUp Failed") ;  
-            // toast(message) ;   
-            console.log(message) ; 
-            toast.error("An Error Occured") ;
-        }
-
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
+    } catch (error) {
+      const errorMsg = String(error.response?.data?.message || 'Signup failed');
+      toast.error(errorMsg);
+      console.error('Signup error:', error);
+    } finally {
+      setLoading(false);
     }
-
-  // ----------------------------------------------------------------
+  };
 
   return (
-
     <div className="auth-outer">
+      <div className="auth-img">
+        <img
+          src="https://images.unsplash.com/photo-1607743386830-f198fbd7f9c4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0"
+          alt="signup"
+        />
+      </div>
 
-        <div className='auth-img'>
-            <img src="https://images.unsplash.com/photo-1607743386830-f198fbd7f9c4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGNvZGluZyUyMGltYWdlJTIwYmxhY2t8ZW58MHx8MHx8fDA%3D"/>
-        </div>
-
-        <div className='auth'>
-            <div className='auth-title'>
-                SignUp
-            </div>
-            <form onSubmit={SubmitHandler}>
-                <div className="inputs">
-                    <label htmlFor="">name</label>
-                    <input type="text" onChange={ChangeHandler} value={formData.name} placeholder='enter name' name='name'/>
-                </div>
-                <div className="inputs">
-                    <label htmlFor="">email</label>
-                    <input type="email" onChange={ChangeHandler} value={formData.email} placeholder='enter email' name='email'/>
-                </div>
-                <div className="inputs">
-                    <label htmlFor="">password</label>
-                    <input type="text" onChange={ChangeHandler} value={formData.password} placeholder='enter password' name='password'/>
-                </div>
-                <div className="input-btn">
-                    <button type='submit' > {loading ? 'Loading' : 'SignUp' } </button>
-                </div>
-                <div className="redirect">
-                    Already have an account ? <span onClick={() => navigate('/login')}> Login </span>
-                </div>
-            </form>
-        </div>
-
+      <div className="auth">
+        <div className="auth-title">SignUp</div>
+        <form onSubmit={SubmitHandler}>
+          <div className="inputs">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              onChange={ChangeHandler}
+              value={formData.name}
+              placeholder="Enter name"
+              name="name"
+              required
+            />
+          </div>
+          <div className="inputs">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              onChange={ChangeHandler}
+              value={formData.email}
+              placeholder="Enter email"
+              name="email"
+              required
+            />
+          </div>
+          <div className="inputs">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              onChange={ChangeHandler}
+              value={formData.password}
+              placeholder="Enter password"
+              name="password"
+              required
+            />
+          </div>
+          <div className="input-btn">
+            <button type="submit">{loading ? 'Loading...' : 'SignUp'}</button>
+          </div>
+          <div className="redirect">
+            Already have an account?{' '}
+            <span onClick={() => navigate('/login')}>Login</span>
+          </div>
+        </form>
+      </div>
     </div>
+  );
+};
 
-  )
-
-}
-
-
-export default SignUp
+export default SignUp;
