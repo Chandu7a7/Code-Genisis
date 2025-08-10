@@ -31,7 +31,7 @@ const SignUp = () => {
 
       // Signup request
       const res = await axios.post(
-        'https://code-genisis-backend-qtxpwmosv-chandus-projects-d19e03f3.vercel.app/auth/signup',
+        'https://code-genisis-backend-c8461405o-chandus-projects-d19e03f3.vercel.app/auth/signup',
         formData,
         { withCredentials: true }
       );
@@ -40,7 +40,7 @@ const SignUp = () => {
 
       // Auto login after signup
       const lgres = await axios.post(
-        'https://code-genisis-backend-qtxpwmosv-chandus-projects-d19e03f3.vercel.app/auth/login',
+        'https://code-genisis-backend-c8461405o-chandus-projects-d19e03f3.vercel.app/auth/login',
         formData,
         { withCredentials: true }
       );

@@ -97,7 +97,7 @@ const Landing = () => {
     const checkLoginStatus = async () => {
 
         try {
-          const res = await axios.get("https://code-genisis-backend-qtxpwmosv-chandus-projects-d19e03f3.vercel.app/check/authme" , {withCredentials : true}) ; 
+          const res = await axios.get("https://code-genisis-backend-c8461405o-chandus-projects-d19e03f3.vercel.app/check/authme" , {withCredentials : true}) ; 
           if(res.data.success){
             setUser(res.data.user) ; 
             setUserName(res.data.user.name) ; 

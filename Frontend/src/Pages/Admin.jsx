@@ -33,7 +33,7 @@ const Admin = () => {
         
             try {
                 setLoading(true) ; 
-                const res = await axios.get("https://code-genisis-backend-qtxpwmosv-chandus-projects-d19e03f3.vercel.app/user/admin" , {withCredentials : true}) ; 
+                const res = await axios.get("https://code-genisis-backend-c8461405o-chandus-projects-d19e03f3.vercel.app/user/admin" , {withCredentials : true}) ; 
                 setResponse(res.data.users) ; 
                 // -------------------
                 setTotalUsers(res.data.totalusers) ; 
